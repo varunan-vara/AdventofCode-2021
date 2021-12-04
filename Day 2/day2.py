@@ -16,6 +16,9 @@ inputlist = [[item[0], int(item[1])] for item in inputlist]
 def locator (direction, listy):
     return [item[1] for item in listy if item[0] == direction]
 
+def addingTo (inputy, direction, multiplier):
+    return inputy[1] * multiplier if (inputy[0] == direction) else 0
+
 #---Part 1---
 forward = sum(locator("forward", inputlist))
 depth = sum(locator("down", inputlist)) - sum(locator("up", inputlist))
@@ -26,8 +29,8 @@ aim = 0
 depth = 0
 forward = 0
 for instruction in inputlist:
-    aim += instruction[1] if (instruction[0] == "down" ) else 0
-    aim -= instruction[1] if (instruction[0] == "up") else 0
-    depth += (instruction[1] * aim) if (instruction[0] == "forward") else 0
-    forward += (instruction[1]) if (instruction[0] == "forward") else 0
+    aim += addingTo(instruction, "down", 1)
+    aim -= addingTo(instruction, "up", 1)
+    depth += addingTo(instruction, "forward", aim)
+    forward += addingTo(instruction, "forward", 1)
 print("Part 2: ", depth * forward)
