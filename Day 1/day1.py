@@ -1,11 +1,16 @@
 import re
+import os
 
 #Read Lines and organize into list: numberslist
-file_handle = open("input.txt", "r")
-_numberslist = file_handle.readlines()
+here = os.path.dirname(os.path.abspath(__file__))
+file = os.path.join(here, "input.txt")
+file_handle = open(file, "r")
+_itemlist = file_handle.readlines()
 pattern = r"\n"
-numberslist = [int(re.sub(pattern, "", numbers)) for numbers in _numberslist]
+itemlist = [re.sub(pattern, "", numbers) for numbers in _itemlist]
 #print("Numbers: \n", numberslist)
+
+numberslist = [int(item) for item in itemlist]
 
 #---Part 1---
 compare_1 = tuple(zip(numberslist, numberslist[1:])) 
