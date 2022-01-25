@@ -110,13 +110,35 @@ while not won:
     numcount += 1
 print(len(bingo_card_list))
 #---Part 2---
-winners = []
-newlist = bingo_card_list
-for num in bingonums:
-    for card2 in newlist:
-        card2.inputnum(num)
-        card2.isWinner(False)
-        if card2.wonbool():
-            winners.append(card2.returnscore())
-            newlist.pop(newlist.index(card2))
+#Rewrite bingocards class
+
+class BingoCards:
+    def __init__ (self, card:list):
+        tempbingocard = []
+        temprow = []
+        for number in card:
+            temprow.append(number)
+            if len(temprow) >= 5:
+                tempbingocard.append(temprow)
+                temprow = []
+        bingo = {}
+        for i in range(len(tempbingocard)):
+            bingo[chr(i + 96)] = tempbingocard[i]
+        self.card = bingo
+        self.turnssurvived = 0
+        self.tickedvals = []
+    def isSolved (self):
+        return
+    def numinput (self, num):
+        for key in self.card:
+            if num in self.card[key]:
+                x = self.card[key].index(num)
+                foundval = key + str(x)
+                print("Found value in bingocard: " + foundval)
+                self.tickedvals.append(foundval)
+        self.isSolved()
+
+bingo_card_list = [BingoCards(item) for item in itemlist]
+print(itemlist)
+print(bingo_card_list[0].card)
 print("Part 2:")
